@@ -518,7 +518,6 @@ class BlenderMCPServer:
                             bpy.data.worlds.new("World")
 
                         world = bpy.data.worlds[0]
-                        world.use_nodes = True
                         node_tree = world.node_tree
 
                         # Clear existing nodes
@@ -638,7 +637,6 @@ class BlenderMCPServer:
 
                     # Create a new material with the downloaded textures
                     mat = bpy.data.materials.new(name=asset_id)
-                    mat.use_nodes = True
                     nodes = mat.node_tree.nodes
                     links = mat.node_tree.links
 
@@ -767,9 +765,9 @@ class BlenderMCPServer:
                         if file_format == "gltf" or file_format == "glb":
                             bpy.ops.import_scene.gltf(filepath=main_file_path)
                         elif file_format == "fbx":
-                            bpy.ops.import_scene.fbx(filepath=main_file_path)
+                            bpy.ops.wm.fbx_import(filepath=main_file_path)
                         elif file_format == "obj":
-                            bpy.ops.import_scene.obj(filepath=main_file_path)
+                            bpy.ops.wm.obj_import(filepath=main_file_path)
                         elif file_format == "blend":
                             # For blend files, we need to append or link
                             with bpy.data.libraries.load(main_file_path, link=False) as (data_from, data_to):
@@ -864,7 +862,6 @@ class BlenderMCPServer:
                 bpy.data.materials.remove(existing_mat)
 
             new_mat = bpy.data.materials.new(name=new_mat_name)
-            new_mat.use_nodes = True
 
             # Set up the material nodes
             nodes = new_mat.node_tree.nodes
